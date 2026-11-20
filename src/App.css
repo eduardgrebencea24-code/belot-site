@@ -1,0 +1,627 @@
+*{box-sizing:border-box}html,body,#root{margin:0;min-height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:#090e14;color:#fff}body{min-width:320px}.app{min-height:100vh;background:radial-gradient(circle at 50% 0,#18252d 0,#0a1017 35%,#05090e 100%)}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:default;opacity:.42} .sitebar{height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#101820;border-bottom:1px solid #273039;position:sticky;top:0;z-index:30}.logo{border:0;background:none;color:#fff;font-size:20px;font-weight:900;letter-spacing:2px}.logo span{display:inline-grid;place-items:center;width:32px;height:32px;margin-right:8px;border-radius:8px;background:#e7c46c;color:#132019}.target{font-size:14px;color:#aab3ba}.target b{color:#f1d477}.error{width:min(920px,calc(100% - 30px));margin:14px auto 0;padding:11px 15px;background:#4b2025;border:1px solid #7e3942;border-radius:10px;color:#ffd0d0;font-weight:700}.home{width:min(1050px,calc(100% - 32px));margin:0 auto;padding:16px 0 10px}.hero{text-align:center;margin-bottom:14px}.logo-big{margin:auto;width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#efd27c,#b78b36);color:#122019;font-size:24px;box-shadow:0 8px 22px #0008}.hero h1{font-size:32px;margin:7px 0 3px}.hero p{color:#8e9ba2;font-size:13px;margin:0}.home-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.home-card,.lobby-card{background:linear-gradient(145deg,#141f25,#0e161c);border:1px solid #29343b;border-radius:14px;padding:15px;box-shadow:0 15px 45px #0007}.home-card h2{margin:0 0 9px;font-size:18px}.home-card label{display:flex;gap:5px;margin:6px 0 3px;color:#aeb8be;font-size:11px;font-weight:700}.home-card small{color:#65727a;font-weight:500}.home-card input{width:100%;height:36px;padding:0 11px;border-radius:7px;border:1px solid #303b42;background:#0a1116;color:#fff;outline:none}.home-card input:focus{border-color:#c9a64f}.gold-btn,.dark-btn,.round-btn,.link-btn{border-radius:9px;min-height:40px;font-weight:800}.gold-btn{border:0;background:linear-gradient(135deg,#f0d47e,#b9913b);color:#132018;padding:0 22px;box-shadow:0 10px 25px #b9913b22}.dark-btn{border:1px solid #526069;background:#162028;color:#fff;padding:0 22px}.home-card .gold-btn,.home-card .dark-btn{width:100%;margin-top:10px}.rules-note{margin:8px auto 0;display:flex;gap:8px;align-items:center;width:min(760px,100%);padding:8px 12px;border:1px solid #29343b;background:#0d151b;border-radius:9px;color:#87949b;font-size:11px}.rules-note b{color:#d8bc67}.lobby{width:min(920px,calc(100% - 32px));margin:0 auto;padding:60px 0}.lobby-head{display:flex;justify-content:space-between;align-items:flex-start}.eyebrow{font-size:11px;letter-spacing:2px;color:#d6b85e;font-weight:900}.lobby h1{font-size:38px;margin:7px 0}.lobby p{color:#89959c}.room-code{letter-spacing:4px;color:#f2d276}.mode-pill{padding:9px 13px;border:1px solid #51472d;background:#201d13;color:#e8c96e;border-radius:9px}.seat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px}.seat{min-height:110px;border:1px dashed #364149;border-radius:13px;padding:16px;display:grid;grid-template-columns:48px 1fr auto;column-gap:12px;align-items:center;color:#7b878d}.seat.filled{border-style:solid;background:#10191f;color:#fff}.seat .avatar{grid-row:span 2}.seat b{font-size:16px}.seat span{font-size:12px;color:#78868e}.seat em{font-style:normal;color:#d7b95f;font-size:11px}.avatar{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#d7d9dc,#858b91);color:#222;font-weight:900;border:2px solid #c7cbd0}.lobby-actions{display:flex;gap:12px;align-items:center;margin-top:22px}.lobby-actions .gold-btn{flex:1}.link-btn{border:0;background:none;color:#c6d0d5;padding:0 18px}.game-wrap{width:min(1040px,100%);margin:0 auto;padding:0 14px 18px}.game-head{height:54px;display:flex;justify-content:space-between;align-items:center}.players-tabs{display:flex;height:100%}.tab{display:flex;align-items:center;gap:7px;padding:0 12px;color:#9ba7ad;font-size:12px;border-right:1px solid #252f35}.tab.me{color:#fff;background:#151f26}.tab-dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#27333b;color:#e0c66e;font-size:10px;font-weight:800}.game-title{display:flex;gap:18px;color:#8b969d;font-size:12px}.game-title b{color:#e0c66e}.felt-area{display:flex;justify-content:center}.felt{width:min(820px,100%);aspect-ratio:1.55;background:linear-gradient(135deg,#10151a,#05090d);padding:18px;border-radius:42px;box-shadow:0 30px 90px #0009}.felt-inner{position:relative;width:100%;height:100%;border:11px solid #2a2c2d;border-radius:40%/28%;background:radial-gradient(ellipse at center,#0c7d8b 0,#08717e 52%,#075966 100%);box-shadow:inset 0 0 50px #001c22,0 0 0 2px #51504a;overflow:hidden}.center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:52%;height:46%;display:flex;flex-direction:column;align-items:center;justify-content:center}.table-status{font-size:12px;color:#b7d1d2;text-transform:uppercase;letter-spacing:1.5px}.trump-chip{margin-top:7px;padding:5px 10px;border-radius:20px;background:#052d34aa;border:1px solid #6db5b9;color:#cce2e3;font-size:11px}.trump-chip b{font-size:17px;margin-left:5px}.table-cards{display:flex;justify-content:center;align-items:center;min-height:150px;margin-top:7px}.empty-felt{color:#78a5a8;font-size:12px}.player-pos{position:absolute;display:flex;align-items:center;gap:8px;z-index:4}.player-pos.top{left:50%;top:16px;transform:translateX(-50%);flex-direction:column-reverse}.player-pos.bottom{left:50%;bottom:9px;transform:translateX(-50%);flex-direction:column}.player-pos.left{left:10px;top:50%;transform:translateY(-50%);flex-direction:column}.player-pos.right{right:10px;top:50%;transform:translateY(-50%);flex-direction:column}.player-pos.active .avatar{border-color:#cde95d;box-shadow:0 0 0 5px #9fc63c33,0 0 25px #a9db4e55}.avatar.large{width:62px;height:62px}.player-name{display:flex;flex-direction:column;align-items:center;background:#081017dd;border-radius:6px;padding:4px 8px;min-width:94px}.player-name b{font-size:11px;white-space:nowrap}.player-name span{font-size:10px;color:#a8b4ba}.back-cards{display:flex;position:absolute;top:48px}.player-pos.left .back-cards,.player-pos.right .back-cards{top:0;left:55px}.player-pos.bottom .back-cards{top:-35px}.back-cards span{width:28px;height:46px;margin-left:-20px;border-radius:4px;border:2px solid #f2f2ef;background:repeating-linear-gradient(45deg,#d52f45 0,#d52f45 3px,#f5d4d8 3px,#f5d4d8 5px);box-shadow:0 2px 4px #0006}.team-tag{position:absolute;top:88px;color:#b8d2d4;font-size:9px}.dealer{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#d8dde0;color:#20272b;border:2px solid #7d878d;font-weight:900;z-index:5}.card{width:86px;height:126px;background:linear-gradient(145deg,#fff,#e9e9e5);border:1px solid #d1d1ce;border-radius:6px;color:#151719;position:relative;padding:8px;box-shadow:0 7px 16px #0007;flex:none;overflow:hidden}.card.red{color:#c62f3d}.rank{font-size:27px;font-weight:800;line-height:1}.big-suit{font-size:48px;line-height:1;text-align:center;margin-top:16px}.court{position:absolute;right:7px;bottom:5px;font-size:42px;opacity:.78}.table-card{width:88px;height:128px;margin:-6px}.hand-area{width:min(820px,100%);margin:-6px auto 0;position:relative;z-index:10}.hand{height:128px;display:flex;justify-content:center;align-items:flex-end;padding-bottom:12px}.hand-card{border:0;background:none;padding:0;margin-left:-18px;transform:rotate(calc((var(--i) - 3.5)*3deg)) translateY(calc(abs(var(--i) - 3.5)*2px));transition:.15s}.hand-card:first-child{margin-left:0}.hand-card:hover:not(:disabled){transform:translateY(-18px) rotate(calc((var(--i) - 3.5)*3deg))}.hand-card .card{width:76px;height:112px}.bottom-bar{display:flex;align-items:center;justify-content:space-between}.round-btn{border:1px solid #3b474e;background:#121a20;color:#aeb8be;padding:0 16px}.score-mini{display:flex;gap:10px}.score-mini span{background:#0d151b;border:1px solid #28343b;border-radius:8px;padding:7px 10px;font-size:11px;color:#9aa5aa}.score-mini b{color:#e5c96b;margin-left:5px}.control-panel{width:min(820px,100%);margin:12px auto 0}.bid-box,.play-controls,.result-box{background:#10191f;border:1px solid #2b363d;border-radius:14px;padding:18px;box-shadow:0 15px 45px #0006}.bid-box{display:grid;grid-template-columns:1fr 2fr auto;gap:18px;align-items:center}.bid-box h2{margin:4px 0 5px;font-size:20px}.bid-box p{margin:0;color:#89969d;font-size:12px}.bid-box p b{color:#f0d06d}.bid-buttons{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.bid-buttons button{height:55px;border-radius:9px;border:1px solid #344048;background:#172229;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}.bid-buttons button b{font-size:22px}.bid-buttons button.red b,.bid-buttons button.red{color:#e05a63}.bid-buttons button.pass{color:#d3b65d}.bid-state{font-size:11px;color:#a6b0b5}.turn-text{font-weight:800;color:#e9eef0}.combo-row{margin-top:9px;display:flex;gap:10px;align-items:center;color:#89969d;font-size:12px}.small-btn{border:1px solid #b08b3d;background:#231f15;color:#e8c96e;border-radius:8px;padding:8px 13px}.result-box{text-align:center}.result-box h2{margin:0 0 16px}.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.result-grid div{padding:12px;background:#0b1217;border-radius:9px;color:#98a3a8}.result-grid b{display:block;color:#f1d475;font-size:24px;margin-top:4px}.result-box .gold-btn{margin-top:15px}.winner{border-color:#8f7537}
+@media(min-width:801px){
+  .felt{max-height:500px;width:min(820px,100%);}
+  .hand{height:126px;padding-bottom:6px;}
+  .hand-card .card{width:78px;height:114px;}
+  .game-wrap{padding-bottom:12px;}
+}
+
+@media(max-width:800px){.home-grid{grid-template-columns:1fr}.home{padding-top:35px}.hero h1{font-size:42px}.felt{aspect-ratio:.7;border-radius:28px;padding:9px}.felt-inner{border-width:7px;border-radius:38%/19%}.player-pos.left{left:2px}.player-pos.right{right:2px}.avatar.large{width:50px;height:50px}.player-name{min-width:74px}.player-name b{font-size:9px}.player-name span{font-size:8px}.back-cards span{width:20px;height:34px}.player-pos.left .back-cards,.player-pos.right .back-cards{left:45px}.center{width:62%;height:36%}.card.table-card{width:62px;height:92px}.table-card .rank{font-size:19px}.table-card .big-suit{font-size:32px;margin-top:10px}.table-card .court{font-size:25px}.hand{height:142px}.hand-card .card{width:61px;height:98px}.hand-card{margin-left:-25px}.hand-card .rank{font-size:19px}.hand-card .big-suit{font-size:30px;margin-top:10px}.hand-card .court{font-size:25px}.bid-box{grid-template-columns:1fr}.bid-buttons{grid-template-columns:repeat(5,1fr)}.bid-buttons button span{font-size:8px}.game-title{display:none}.players-tabs{overflow:hidden}.tab{padding:0 7px}.score-mini{gap:4px}.score-mini span{font-size:9px;padding:5px}.seat-grid{grid-template-columns:1fr}.lobby-head{flex-direction:column;gap:15px}.lobby-actions{flex-direction:column}.lobby-actions .gold-btn{width:100%}}
+
+.hand-card.static{pointer-events:none}.table-cards .table-card:nth-child(1){transform:rotate(-3deg) translate(-35px,0)}.table-cards .table-card:nth-child(2){transform:rotate(2deg) translate(0,8px)}.table-cards .table-card:nth-child(3){transform:rotate(-2deg) translate(30px,0)}.table-cards .table-card:nth-child(4){transform:rotate(4deg) translate(55px,7px)}
+
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:2px}.mode-option{min-height:54px;border:1px solid #303b42;border-radius:7px;background:#0b1217;color:#b6c0c5;padding:6px;text-align:left;display:flex;flex-direction:column;justify-content:center;gap:2px}.mode-option b{color:#fff;font-size:13px}.mode-option span{font-size:8px;line-height:1.15;color:#718087}.mode-option.selected{border-color:#d1ad55;background:linear-gradient(145deg,#292516,#17170f);box-shadow:0 0 0 1px #d1ad5533}.mode-option.selected b{color:#f1d477}.mode-description{margin-top:12px;color:#a7b2b8;font-size:13px}.seats-2{grid-template-columns:1fr 1fr}.seats-3{grid-template-columns:repeat(3,1fr)}.seats-4{grid-template-columns:1fr 1fr}.mode-1v1 .felt{aspect-ratio:1.55}.mode-3p .felt{aspect-ratio:1.45}.mode-1v1 .player-pos.top{top:25px}.mode-1v1 .player-pos.right{right:50%;top:auto;bottom:18px;transform:translateX(50%);flex-direction:column}.mode-1v1 .center{height:52%}.mode-3p .player-pos.top{top:18px}.mode-3p .player-pos.left{left:18px}.mode-3p .player-pos.right{right:18px}.mode-3p .player-pos.bottom{display:none}.mode-3p .center{height:48%}.mode-1v1 .score-mini,.mode-3p .score-mini{flex-wrap:wrap;justify-content:flex-end}.mode-1v1 .score-mini span,.mode-3p .score-mini span{min-width:70px}
+@media(max-width:800px){.mode-grid{grid-template-columns:1fr}.seats-3{grid-template-columns:1fr}.seats-4,.seats-2{grid-template-columns:1fr}.mode-1v1 .player-pos.right{right:50%;bottom:8px}.mode-3p .player-pos.left{left:2px}.mode-3p .player-pos.right{right:2px}.mode-3p .felt{aspect-ratio:.72}}
+
+/* Компактная зона колоды и открытой карты козыря */
+.deck-zone{position:absolute;left:50%;top:10px;transform:translateX(-50%);width:190px;height:112px;display:flex;align-items:flex-start;justify-content:center;z-index:7;pointer-events:none}
+.deck-zone .turned-card{position:relative;width:54px;height:78px;margin:0 0 0 18px;z-index:4;transform:rotate(2deg)}
+.deck-zone .table-card{width:54px;height:78px;margin:0}
+.deck-zone .table-card .rank{font-size:17px;padding:0}
+.deck-zone .table-card .big-suit{font-size:28px;margin-top:9px}
+.deck-zone .table-card .court{font-size:23px;right:4px;bottom:3px}
+.turned-suit{position:absolute;right:-7px;top:-7px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#07161bdd;border:1px solid #d7bb62;color:#f0d26d;font-size:13px;font-weight:900;box-shadow:0 2px 6px #0008}
+.deck-stack{position:relative;width:54px;height:78px;margin-top:2px}
+.deck-stack span{position:absolute;left:0;top:0;width:54px;height:78px;border-radius:5px;border:2px solid #f1f1ed;background:repeating-linear-gradient(45deg,#d52f45 0,#d52f45 3px,#f5d4d8 3px,#f5d4d8 5px);box-shadow:0 3px 7px #0007}
+.deck-stack span:nth-child(1){transform:translate(-7px,5px) rotate(-5deg)}
+.deck-stack span:nth-child(2){transform:translate(-3px,2px) rotate(-2deg)}
+.deck-stack span:nth-child(3){transform:translate(0,0)}
+.deck-label{position:absolute;left:50%;top:83px;transform:translateX(-50%);white-space:nowrap;padding:3px 9px;border-radius:10px;background:#06151ad9;border:1px solid #41666a;color:#a9c5c8;font-size:9px;letter-spacing:.3px}
+.deck-label b{color:#e7cb70;margin-right:4px;font-size:8px}
+.red-text{color:#e05a63}
+.player-pos.top{top:128px}
+.mode-1v1 .player-pos.top{top:118px}
+.mode-3p .player-pos.top{top:122px}
+@media(max-width:800px){
+  .deck-zone{top:7px;transform:translateX(-50%) scale(.82);transform-origin:top center}
+  .player-pos.top{top:108px}
+  .mode-1v1 .player-pos.top{top:105px}
+  .mode-3p .player-pos.top{top:108px}
+}
+
+/* Финальная компактная компоновка игрового экрана для 1080p */
+@media (min-width:801px){
+  .sitebar{height:48px;padding:0 22px}
+  .game-wrap{width:min(980px,100%);padding:0 10px 8px}
+  .game-head{height:42px}
+  .felt{width:min(760px,100%);height:300px;max-height:none;aspect-ratio:auto;padding:12px;border-radius:34px}
+  .felt-inner{border-width:8px;border-radius:38%/25%}
+  .center{width:48%;height:38%;top:58%;z-index:5}
+  .table-status{font-size:10px}
+  .trump-chip{margin-top:3px;padding:3px 8px;font-size:9px}
+  .trump-chip b{font-size:14px}
+  .table-cards{min-height:82px;margin-top:2px}
+  .table-cards .table-card{width:58px;height:84px;margin:-4px}
+  .table-cards .table-card .rank{font-size:17px}
+  .table-cards .table-card .big-suit{font-size:29px;margin-top:8px}
+  .table-cards .table-card .court{font-size:23px}
+  .player-pos.top{top:54px}
+  .mode-1v1 .player-pos.top{top:54px}
+  .mode-3p .player-pos.top{top:50px}
+  .player-pos.bottom{bottom:5px}
+  .player-pos.left{left:6px}
+  .player-pos.right{right:6px}
+  .avatar.large{width:48px;height:48px}
+  .player-name{min-width:78px;padding:3px 6px}
+  .player-name b{font-size:10px}
+  .player-name span{font-size:9px}
+  .back-cards{top:38px}
+  .player-pos.left .back-cards,.player-pos.right .back-cards{left:43px}
+  .player-pos.bottom .back-cards{top:-27px}
+  .back-cards span{width:22px;height:36px;margin-left:-16px}
+  .dealer{width:24px;height:24px;font-size:11px;top:58%}
+  .hand-area{width:min(760px,100%);margin:2px auto 0}
+  .hand{height:82px;padding-bottom:3px}
+  .hand-card{margin-left:-14px}
+  .hand-card .card,.hand-card .card{width:56px;height:82px;padding:5px}
+  .hand-card .rank{font-size:18px}
+  .hand-card .big-suit{font-size:29px;margin-top:9px}
+  .hand-card .court{font-size:24px;right:4px;bottom:3px}
+  .control-panel{width:min(760px,100%);margin:6px auto 0}
+  .bid-box,.play-controls,.result-box{padding:10px 12px;border-radius:10px}
+  .bid-box{grid-template-columns:1.15fr 2fr auto;gap:10px;min-height:78px}
+  .bid-box h2{font-size:16px;margin:2px 0}
+  .bid-box p{font-size:10px;line-height:1.2}
+  .bid-buttons{gap:4px}
+  .bid-buttons button{height:46px;border-radius:7px}
+  .bid-buttons button b{font-size:18px}
+  .bid-buttons button span{font-size:9px}
+  .bid-state{font-size:9px;white-space:nowrap}
+  .turn-text{font-size:12px}
+  .combo-row{margin-top:5px;font-size:10px}
+  .bottom-bar{min-height:30px}
+  .round-btn{min-height:30px;font-size:11px}
+  .score-mini span{padding:5px 7px;font-size:9px}
+
+  /* Колода находится в центральной части стола; открытая карта лежит сверху стопки. */
+  .deck-zone{left:50%;top:27%;width:110px;height:92px;transform:translate(-50%,-50%);}
+  .deck-stack{width:52px;height:74px;position:absolute;left:50%;top:0;transform:translateX(-50%)}
+  .deck-stack span{width:52px;height:74px}
+  .deck-zone .turned-card{position:absolute;left:50%;top:-2px;width:52px;height:74px;margin:0;transform:translateX(-50%) rotate(2deg);z-index:5}
+  .deck-zone .table-card{width:52px;height:74px;margin:0}
+  .deck-zone .table-card .rank{font-size:16px}
+  .deck-zone .table-card .big-suit{font-size:27px;margin-top:8px}
+  .deck-zone .table-card .court{font-size:22px}
+  .deck-label{top:78px;font-size:8px;padding:2px 6px}
+  .deck-label b{font-size:7px}
+  .turned-suit{width:18px;height:18px;font-size:11px;right:-5px;top:-5px}
+  .deck-zone.is-trump .deck-stack{opacity:.92}
+}
+
+/* В режиме торгов нельзя случайно играть карту; кнопки доступны только при bidding. */
+.bid-buttons button.forbidden{border-color:#3a3330;color:#596268;background:#10171b}
+
+@media(max-width:800px){
+  .deck-zone{left:50%;top:31%;width:100px;height:78px;transform:translate(-50%,-50%) scale(.82)}
+  .deck-zone .turned-card{position:absolute;left:50%;top:0;transform:translateX(-50%) rotate(2deg);margin:0}
+  .deck-stack{position:absolute;left:50%;top:0;transform:translateX(-50%)}
+  .deck-label{top:76px}
+}
+
+@media (min-width:801px){
+  .mode-1v1 .player-pos.right{right:50%;top:auto;bottom:5px;transform:translateX(50%);flex-direction:column}
+  .mode-3p .player-pos.bottom{display:none}
+  .auto-trump{color:#e7cb70;font-weight:700}
+}
+
+
+/* Ожидание хода соперника: карты остаются яркими и аккуратными, но явно неактивны. */
+.hand-card.waiting,
+.hand-card.waiting:disabled{opacity:1;cursor:default;}
+.hand-card.waiting .card{filter:saturate(.82) brightness(.96);box-shadow:0 5px 13px #0006, inset 0 0 0 1px #ffffff22;}
+.hand-card.waiting:hover .card{transform:none;}
+.hand-waiting{position:relative;}
+.hand-waiting::after{content:'ОЖИДАНИЕ ХОДА';position:absolute;left:50%;bottom:0;transform:translate(-50%,50%);padding:3px 9px;border:1px solid #3b5258;border-radius:999px;background:#081217e8;color:#9eb0b5;font-size:8px;font-weight:800;letter-spacing:.8px;white-space:nowrap;box-shadow:0 4px 12px #0006;pointer-events:none;}
+@media(max-width:800px){.hand-waiting::after{font-size:7px;padding:2px 7px;}}
+
+/* Live trick score */
+.player-name .live-score{color:#d8c16d;font-weight:700}.player-name .live-score strong{color:#f5da79;font-size:12px;margin-left:3px}.score-mini span{min-width:76px;text-align:center}.score-mini b{font-size:12px}
+
+/* Финальная компоновка стола: элементы разведены и не перекрывают друг друга. */
+@media (min-width:801px){
+  .game-wrap{width:min(1000px,100%);padding:0 8px 6px}
+  .game-head{height:38px}
+  .felt{width:min(780px,100%);height:270px;aspect-ratio:auto;padding:11px;border-radius:34px}
+  .felt-inner{border-width:8px;border-radius:38%/24%;overflow:hidden}
+  .center{width:44%;height:54%;top:52%;z-index:5}
+  .table-status{font-size:10px}
+  .trump-chip{margin-top:3px;padding:3px 8px;font-size:9px}
+  .table-cards{min-height:78px;margin-top:2px}
+  .table-cards .table-card{width:56px;height:80px;margin:-3px}
+  .table-cards .table-card .rank{font-size:16px}
+  .table-cards .table-card .big-suit{font-size:27px;margin-top:7px}
+  .table-cards .table-card .court{font-size:22px}
+
+  .player-pos.top{top:8px}
+  .mode-1v1 .player-pos.top{top:8px}
+  .mode-3p .player-pos.top{top:8px}
+  .player-pos.bottom{bottom:7px}
+  .player-pos.left{left:8px}
+  .player-pos.right{right:8px}
+  .mode-1v1 .player-pos.right{right:50%;top:auto;bottom:7px;transform:translateX(50%);flex-direction:column}
+  .mode-3p .player-pos.left{left:10px}
+  .mode-3p .player-pos.right{right:10px}
+
+  .avatar.large{width:44px;height:44px}
+  .player-name{min-width:82px;padding:3px 7px}
+  .player-name b{font-size:10px}
+  .player-name span{font-size:9px}
+  .back-cards{top:35px}
+  .player-pos.left .back-cards,.player-pos.right .back-cards{left:40px}
+  .player-pos.bottom .back-cards{top:-25px}
+  .back-cards span{width:20px;height:34px;margin-left:-14px}
+  .team-tag{top:68px}
+  .dealer{width:22px;height:22px;font-size:10px;top:52%}
+
+  .control-panel{width:min(780px,100%);margin:5px auto 0}
+  .bid-box,.play-controls,.result-box{padding:8px 10px;border-radius:10px}
+  .bid-box{grid-template-columns:1.1fr 2fr auto;gap:8px;min-height:68px}
+  .bid-box h2{font-size:15px;margin:1px 0}
+  .bid-box p{font-size:9px;line-height:1.15}
+  .bid-buttons{gap:4px}
+  .bid-buttons button{height:42px}
+  .bid-buttons button b{font-size:17px}
+  .bid-buttons button span{font-size:8px}
+  .bid-state{font-size:8px}
+
+  .hand-area{width:min(780px,100%);margin:1px auto 0}
+  .hand{height:72px;padding-bottom:2px}
+  .hand-card{margin-left:-13px}
+  .hand-card .card{width:54px;height:78px;padding:5px}
+  .hand-card .rank{font-size:17px}
+  .hand-card .big-suit{font-size:28px;margin-top:8px}
+  .hand-card .court{font-size:23px;right:4px;bottom:3px}
+  .bottom-bar{min-height:28px}
+  .round-btn{min-height:28px;font-size:10px}
+  .score-mini{gap:6px}
+  .score-mini span{padding:5px 8px;font-size:9px}
+
+  /* Открытая карта лежит прямо на колоде только во время торгов. */
+  .deck-zone{left:50%;top:34%;width:100px;height:88px;transform:translate(-50%,-50%)}
+  .deck-stack{width:50px;height:72px;position:absolute;left:50%;top:0;transform:translateX(-50%)}
+  .deck-stack span{width:50px;height:72px}
+  .deck-zone .turned-card{position:absolute;left:50%;top:-2px;width:50px;height:72px;margin:0;transform:translateX(-50%) rotate(2deg);z-index:5}
+  .deck-zone .table-card{width:50px;height:72px;margin:0}
+  .deck-zone .table-card .rank{font-size:15px}
+  .deck-zone .table-card .big-suit{font-size:26px;margin-top:7px}
+  .deck-zone .table-card .court{font-size:21px}
+  .deck-label{top:76px;font-size:8px;padding:2px 6px}
+  .deck-label b{font-size:7px}
+  .turned-suit{width:17px;height:17px;font-size:10px;right:-5px;top:-5px}
+}
+
+/* Когда это не ход игрока, карты выглядят обычными и не реагируют на наведение. */
+.hand-card.waiting,
+.hand-card.waiting:disabled{opacity:1;cursor:default;}
+.hand-card.waiting .card{filter:none;box-shadow:0 7px 16px #0007;}
+.hand-card.waiting:hover .card{transform:none;}
+.hand-waiting::after{display:none;}
+
+/* Внизу показывается накопленный счёт партии, а возле игрока — очки текущей раздачи. */
+.player-name .live-score{color:#d8c16d;font-weight:700}
+.player-name .live-score strong{color:#f5da79;font-size:12px;margin-left:3px}
+.score-mini span{min-width:76px;text-align:center}
+.score-mini b{font-size:12px}
+
+/* ===== FINAL TABLE LAYOUT OVERRIDE ===== */
+.game-wrap{width:min(1000px,calc(100vw - 24px));margin:0 auto;padding:0 6px 10px;}
+.game-head{height:44px;display:flex;align-items:center;justify-content:space-between;}
+.felt-area{width:100%;display:flex;justify-content:center;}
+.felt{position:relative;width:min(820px,100%);height:390px;aspect-ratio:auto!important;border-radius:190px;background:radial-gradient(circle at 50% 48%,#15818a 0,#0d7179 62%,#075c64 100%);border:2px solid #3d4140;box-shadow:0 0 0 10px #151b1c,0 18px 45px #0008;overflow:hidden;}
+.felt-inner{position:absolute;inset:0;}
+
+/* 1x1: fixed, readable positions */
+.mode-1v1 .deck-zone{left:50%;top:68px;width:110px;height:82px;transform:translateX(-50%);z-index:10;}
+.mode-1v1 .deck-zone .deck-stack{position:absolute;left:0;top:0;}
+.mode-1v1 .deck-zone .turned-card{position:absolute;left:54px;top:-2px;margin:0;z-index:5;}
+.mode-1v1 .deck-zone .deck-label{top:80px;}
+.mode-1v1 .player-pos.top{left:50%;top:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:8;}
+.mode-1v1 .player-pos.top .back-cards{position:absolute;top:45px;left:50%;transform:translateX(-50%);}
+.mode-1v1 .player-pos.right{left:50%;right:auto;top:auto;bottom:12px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;z-index:8;}
+.mode-1v1 .player-pos.right .back-cards{position:absolute;top:-48px;left:50%;transform:translateX(-50%);}
+.mode-1v1 .player-pos .avatar{display:none;}
+.mode-1v1 .player-name{min-width:94px;text-align:center;background:#062029e8;border:1px solid #163a42;border-radius:8px;padding:5px 8px;box-shadow:0 5px 14px #0005;}
+.mode-1v1 .player-name b{display:block;font-size:12px;}
+.mode-1v1 .player-name .live-score{display:block;font-size:10px;margin-top:2px;}
+.mode-1v1 .back-cards{display:flex;gap:0;justify-content:center;height:34px;}
+.mode-1v1 .back-cards span{width:22px;height:30px;border:2px solid #f1f1ed;border-radius:4px;background:repeating-linear-gradient(45deg,#d52f45 0,#d52f45 2px,#f5d4d8 2px,#f5d4d8 4px);box-shadow:0 2px 5px #0007;margin-left:-8px;}
+.mode-1v1 .back-cards span:first-child{margin-left:0;}
+.mode-1v1 .center{position:absolute;left:50%;top:50%;width:300px;height:150px;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:4;}
+.mode-1v1 .table-status{font-size:10px;color:#c8d2d5;margin-bottom:5px;}
+.mode-1v1 .trump-chip{font-size:10px;margin:0 0 7px;padding:3px 9px;}
+.mode-1v1 .table-cards{min-height:88px;display:flex;align-items:center;justify-content:center;position:relative;width:100%;}
+.mode-1v1 .table-cards .table-card{width:60px;height:86px;margin:0 5px;}
+.mode-1v1 .dealer{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;opacity:.85;}
+
+/* 3-player layout */
+.mode-3p .deck-zone{left:50%;top:72px;}
+.mode-3p .player-pos.top{top:12px;left:50%;transform:translateX(-50%);}
+.mode-3p .player-pos.left{left:18px;top:50%;transform:translateY(-50%);}
+.mode-3p .player-pos.right{right:18px;top:50%;transform:translateY(-50%);}
+.mode-3p .center{left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:170px;}
+
+/* 2x2 layout */
+.mode-2v2 .deck-zone{left:50%;top:72px;}
+.mode-2v2 .player-pos.top{top:12px;left:50%;transform:translateX(-50%);}
+.mode-2v2 .player-pos.left{left:22px;top:50%;transform:translateY(-50%);}
+.mode-2v2 .player-pos.right{right:22px;top:50%;transform:translateY(-50%);}
+.mode-2v2 .player-pos.bottom{bottom:12px;left:50%;transform:translateX(-50%);}
+.mode-2v2 .center{left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:160px;}
+
+/* bidding panel stays close to table and does not create a giant empty block */
+.control-panel{width:min(820px,100%);margin:8px auto 0;}
+.bid-box,.play-controls,.result-box{padding:10px 12px;border-radius:12px;}
+.bid-box{display:grid;grid-template-columns:190px 1fr auto;gap:10px;align-items:center;}
+.bid-box h2{font-size:17px;margin:2px 0 3px;}
+.bid-box p{font-size:10px;line-height:1.3;margin:0;}
+.bid-buttons{display:flex;justify-content:center;gap:5px;}
+.bid-buttons button{min-width:60px;height:48px;padding:4px 6px;}
+.bid-state{font-size:9px;white-space:nowrap;text-align:right;}
+
+/* hand and score stay in their own zones */
+.hand-area{width:min(820px,100%);margin:5px auto 0;}
+.hand{height:102px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;}
+.hand-card{margin-left:-16px;}
+.hand-card:first-child{margin-left:0;}
+.hand-card .card{width:64px;height:94px;padding:6px;}
+.hand-card .rank{font-size:20px;}
+.hand-card .big-suit{font-size:32px;margin-top:10px;}
+.hand-card .court{font-size:25px;}
+.hand-waiting::after{display:none!important;}
+.hand-card.waiting:hover .card{transform:none!important;}
+.bottom-bar{height:34px;display:flex;align-items:center;justify-content:space-between;}
+
+@media(max-width:800px){
+ .game-wrap{width:calc(100vw - 12px);padding:0 4px 6px;}
+ .felt{height:340px;border-radius:165px;}
+ .mode-1v1 .deck-zone{top:60px;}
+ .mode-1v1 .player-pos.top{top:8px;}
+ .mode-1v1 .player-pos.right{bottom:8px;}
+ .mode-1v1 .center{width:260px;height:135px;}
+ .mode-1v1 .table-cards .table-card{width:56px;height:80px;}
+ .bid-box{grid-template-columns:1fr;gap:7px;}
+ .bid-buttons{flex-wrap:wrap;}
+ .bid-state{text-align:left;}
+ .hand{height:92px;}
+ .hand-card .card{width:56px;height:82px;}
+}
+
+/* ===== COMPACT SCREEN + LOWER DECK ===== */
+@media (min-width:801px){
+  /* Вся игровая сцена помещается на экран 1080p без вертикального скролла. */
+  .game-wrap{padding-bottom:4px;}
+  .game-head{height:34px;}
+  .felt{height:300px;}
+  .mode-1v1 .deck-zone{top:92px;}
+  .mode-3p .deck-zone{top:86px;}
+  .mode-2v2 .deck-zone{top:86px;}
+  .control-panel{margin-top:5px;}
+  .bid-box,.play-controls,.result-box{padding:7px 10px;}
+  .bid-box{min-height:62px;}
+  .bid-buttons button{height:40px;}
+  .hand-area{margin-top:2px;}
+  .hand{height:82px;padding-bottom:1px;}
+  .hand-card .card{width:60px;height:88px;}
+  .hand-card .rank{font-size:19px;}
+  .hand-card .big-suit{font-size:30px;margin-top:9px;}
+  .hand-card .court{font-size:24px;}
+  .bottom-bar{height:28px;}
+  .round-btn{min-height:28px;}
+}
+
+@media (max-width:800px){
+  .mode-1v1 .deck-zone{top:72px;}
+  .mode-3p .deck-zone,.mode-2v2 .deck-zone{top:78px;}
+}
+
+.auto-round-note{
+  margin:14px 0 0;
+  color:#89969d;
+  font-size:11px;
+}
+
+/* Позиция и оформление индикатора козыря в 1v1 */
+.mode-1v1 .trump-chip{
+  position:absolute;
+  left:calc(50% + 82px);
+  top:50%;
+  transform:translateY(-50%);
+  margin:0;
+  z-index:30;
+  white-space:nowrap;
+  padding:5px 10px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#13252b,#0b171c);
+  border:1px solid #4e777b;
+  color:#b8d0d2;
+  font-size:10px;
+  font-weight:700;
+  box-shadow:0 4px 12px #0007, inset 0 0 10px #6aaeb314;
+}
+.mode-1v1 .trump-chip b{
+  color:#e7c967;
+  font-size:15px;
+  margin-left:5px;
+  vertical-align:-1px;
+}
+
+/* Карты, лежащие на столе, должны быть выше колоды и аватаров.
+   Важно: z-index дочернего .table-cards не может выйти выше
+   stacking context родителя .center, поэтому повышаем сам .center. */
+.mode-1v1 .center,
+.mode-3p .center,
+.mode-2v2 .center{
+  z-index:25;
+}
+
+/* ===== PLAYED CARDS / DECK SEPARATION =====
+   Игровые карты должны оставаться полностью открытыми.
+   Колода/открытая карта козыря вынесена из центра стола. */
+.mode-1v1 .deck-zone{
+  left:32%;
+  top:58px;
+  transform:translateX(-50%);
+  z-index:6;
+}
+.mode-1v1 .table-cards{
+  z-index:20;
+}
+.mode-1v1 .table-cards .table-card{
+  position:relative;
+  z-index:21;
+}
+.mode-3p .deck-zone,
+.mode-2v2 .deck-zone{
+  left:34%;
+  top:60px;
+  z-index:6;
+}
+.mode-3p .table-cards,
+.mode-2v2 .table-cards{
+  z-index:20;
+}
+.mode-3p .table-cards .table-card,
+.mode-2v2 .table-cards .table-card{
+  position:relative;
+  z-index:21;
+}
+
+/* ===== АНИМАЦИЯ КРАСИВОЙ РАЗДАЧИ ===== */
+.table-status{
+  transition:opacity .25s ease,transform .25s ease;
+  text-shadow:0 2px 8px #0008;
+}
+.deal-stage-deal-five .hand-card.deal-in,
+.deal-stage-deal-three .hand-card.deal-in{
+  opacity:0;
+  animation:dealCardIn .62s cubic-bezier(.2,.8,.2,1) forwards;
+  animation-delay:var(--deal-delay,0ms);
+}
+.deal-stage-deal-five .hand-card:nth-child(n+6){opacity:0;}
+.deck-zone .deck-stack{
+  transition:transform .25s ease,filter .25s ease;
+}
+.deck-zone:not(.is-jack-flight) .deck-stack{
+  animation:deckPulse 1.5s ease-in-out infinite;
+}
+.turned-card.reveal-card{
+  animation:turnCardReveal .85s cubic-bezier(.18,.9,.22,1) both;
+  transform-origin:center center;
+}
+.deck-zone.is-jack-flight .deck-stack{opacity:.42;filter:blur(.2px);}
+.jack-source{position:absolute;left:54px;top:-2px;z-index:4;animation:jackSourceGlow .5s ease-in-out infinite alternate;}
+.jack-source .table-card{width:50px;height:72px;}
+.jack-flight-overlay{
+  position:absolute;
+  left:50%;top:92px;
+  width:70px;height:100px;
+  transform:translateX(-50%);
+  z-index:80;
+  pointer-events:none;
+}
+.jack-flight-card{position:absolute;left:0;top:0;width:60px;height:86px;}
+.jack-flight-card .table-card{width:60px;height:86px;}
+.flight-glow{
+  position:absolute;inset:-18px;border-radius:50%;
+  background:radial-gradient(circle,#ffeaa0aa 0,#ffc94b38 38%,transparent 72%);
+  filter:blur(5px);animation:flightGlow .65s ease-in-out infinite alternate;
+  z-index:-1;
+}
+.bizone-badge{
+  position:absolute;left:72px;top:17px;white-space:nowrap;
+  padding:6px 10px;border-radius:9px;
+  background:linear-gradient(135deg,#172a2f,#08151a);
+  border:1px solid #d7b657;
+  color:#f4df93;font-size:11px;font-weight:800;
+  box-shadow:0 6px 18px #0009;
+  animation:badgePop .5s ease-out both;
+}
+.bizone-badge b{font-size:16px;margin-left:3px;}
+
+@keyframes dealCardIn{
+  0%{opacity:0;transform:translate(-50px,-125px) scale(.72) rotate(-10deg);filter:brightness(1.5);}
+  55%{opacity:1;transform:translate(8px,-18px) scale(1.03) rotate(3deg);filter:brightness(1.12);}
+  100%{opacity:1;transform:translate(0,0) scale(1) rotate(0);filter:none;}
+}
+@keyframes deckPulse{
+  0%,100%{filter:drop-shadow(0 5px 8px #0008);transform:translateY(0);}
+  50%{filter:drop-shadow(0 8px 14px #d9b84a44);transform:translateY(-2px);}
+}
+@keyframes turnCardReveal{
+  0%{opacity:0;transform:translateX(-50%) rotateY(180deg) rotate(-12deg) scale(.82);filter:brightness(1.7);}
+  55%{opacity:1;transform:translateX(-50%) rotateY(20deg) rotate(5deg) scale(1.06);filter:brightness(1.2);}
+  100%{opacity:1;transform:translateX(-50%) rotateY(0) rotate(2deg) scale(1);filter:none;}
+}
+@keyframes jackSourceGlow{
+  from{filter:drop-shadow(0 0 6px #ffd75a);transform:scale(1);}
+  to{filter:drop-shadow(0 0 18px #fff0a0);transform:scale(1.04);}
+}
+@keyframes flightGlow{
+  from{opacity:.45;transform:scale(.82);}
+  to{opacity:1;transform:scale(1.15);}
+}
+@keyframes badgePop{
+  0%{opacity:0;transform:translateX(-8px) scale(.9);}
+  100%{opacity:1;transform:translateX(0) scale(1);}
+}
+@keyframes flyTop{
+  0%{transform:translate(-50%,0) rotate(2deg) scale(1);}
+  45%{transform:translate(-50%,-28px) rotate(-8deg) scale(1.12);}
+  100%{transform:translate(-50%,-72px) rotate(-4deg) scale(.78);}
+}
+@keyframes flyBottom{
+  0%{transform:translate(0,0) rotate(2deg) scale(1);}
+  45%{transform:translate(5px,72px) rotate(10deg) scale(1.12);}
+  100%{transform:translate(5px,158px) rotate(7deg) scale(.78);}
+}
+@keyframes flyLeft{
+  0%{transform:translate(0,0) rotate(2deg) scale(1);}
+  45%{transform:translate(-72px,25px) rotate(-10deg) scale(1.12);}
+  100%{transform:translate(-205px,25px) rotate(-6deg) scale(.78);}
+}
+@keyframes flyRight{
+  0%{transform:translate(0,0) rotate(2deg) scale(1);}
+  45%{transform:translate(72px,25px) rotate(10deg) scale(1.12);}
+  100%{transform:translate(205px,25px) rotate(6deg) scale(.78);}
+}
+.target-top .jack-flight-card{animation:flyTop 1.15s cubic-bezier(.18,.82,.2,1) forwards;}
+.target-bottom .jack-flight-card{animation:flyBottom 1.15s cubic-bezier(.18,.82,.2,1) forwards;}
+.target-left .jack-flight-card{animation:flyLeft 1.15s cubic-bezier(.18,.82,.2,1) forwards;}
+.target-right .jack-flight-card{animation:flyRight 1.15s cubic-bezier(.18,.82,.2,1) forwards;}
+.mode-1v1 .target-right .jack-flight-card{animation-name:flyBottom;}
+.mode-1v1 .target-right .bizone-badge{left:72px;top:150px;}
+.mode-1v1 .target-right .jack-flight-card{animation-duration:1.15s;}
+
+@media(max-width:800px){
+  .jack-flight-overlay{top:72px;}
+  .bizone-badge{font-size:9px;padding:5px 8px;left:60px;}
+  .bizone-badge b{font-size:13px;}
+  .jack-flight-card,.jack-flight-card .table-card{width:52px;height:76px;}
+}
+
+/* ===== ОБЪЯВЛЕНИЯ ===== */
+.announcement-feed{
+  position:absolute;
+  left:calc(100% + 18px);
+  top:34px;
+  margin:0;
+  width:max-content;
+  max-width:170px;
+  padding:6px 12px;
+  border:1px solid #8f7432;
+  border-radius:9px;
+  background:linear-gradient(135deg,#17160f,#0c171b);
+  color:#c5cdd0;
+  font-size:11px;
+  box-shadow:0 5px 16px #0007;
+  animation:announcementPop .35s ease-out both;
+}
+.announcement-feed b{color:#f0d477}
+.announcement-feed strong{color:#fff0a8}
+.announcement-feed span{color:#d8bd59;font-weight:800;margin-left:4px}
+@media(max-width:800px){.announcement-feed{left:calc(100% - 10px);top:28px;transform:translateX(-5%);max-width:150px;font-size:9px;padding:5px 8px}}
+.live-announcement{
+  display:block;
+  margin-top:2px;
+  color:#d9bc59 !important;
+  font-size:9px !important;
+  font-weight:800;
+}
+.live-announcement strong{color:#f4d66f !important;font-size:10px !important}
+@keyframes announcementPop{
+  from{opacity:0;transform:translateY(-5px) scale(.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+/* ===== ИНДИКАТОР ВЗЯТОК ===== */
+.tricks-badge{
+  position:absolute;
+  z-index:12;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  min-width:62px;
+  padding:4px 8px;
+  border-radius:8px;
+  background:linear-gradient(135deg,#101f24,#081318);
+  border:1px solid #31545a;
+  color:#91a9ae;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.2px;
+  box-shadow:0 4px 12px #0008, inset 0 0 8px #5d8b9210;
+  white-space:nowrap;
+}
+.tricks-badge span{opacity:.9}
+.tricks-badge strong{
+  color:#e7c967;
+  font-size:12px;
+  line-height:1;
+}
+.player-pos.top .tricks-badge{
+  left:calc(50% + 55px);
+  top:38px;
+}
+.player-pos.bottom .tricks-badge{
+  left:calc(50% + 55px);
+  bottom:38px;
+}
+.player-pos.left .tricks-badge{
+  left:92px;
+  top:50%;
+  transform:translateY(-50%);
+}
+.player-pos.right .tricks-badge{
+  right:92px;
+  top:50%;
+  transform:translateY(-50%);
+}
+.mode-1v1 .player-pos.top .tricks-badge{left:calc(50% + 230px);top:50%;transform:translateY(-50%);}
+.mode-1v1 .player-pos.right .tricks-badge{right:calc(50% + 52px);top:4px;transform:none}
+@media(max-width:800px){
+  .tricks-badge{font-size:8px;min-width:55px;padding:3px 6px}
+  .tricks-badge strong{font-size:11px}
+}
+
+
+/* Объявление у портрета: отдельная аккуратная плашка, чтобы было видно обоим игрокам. */
+.player-name .live-announcement{display:flex;align-items:center;gap:5px;width:max-content;margin-top:3px;padding:2px 7px;border:1px solid rgba(214,184,87,.38);border-radius:999px;background:linear-gradient(180deg,rgba(25,43,46,.96),rgba(10,20,23,.96));color:#d6c16b;font-size:9px;font-weight:700;line-height:1.35;box-shadow:0 3px 10px rgba(0,0,0,.18);white-space:nowrap}.player-name .live-announcement span{color:#98a5a9}.player-name .live-announcement strong{color:#f5d86d!important;font-size:10px!important;margin-left:1px}
+
+
+/* ===== ИГРОВАЯ ЗОНА: ВЗЯТЫЕ КАРТЫ НЕ ПЕРЕКРЫВАЮТСЯ КОЛОДОЙ ===== */
+@media (min-width:801px){
+  .mode-1v1 .deck-zone{left:34%;}
+  .mode-1v1 .table-cards{transform:translateX(58px);}
+  .mode-3p .deck-zone,
+  .mode-2v2 .deck-zone{left:36%;}
+  .mode-3p .table-cards,
+  .mode-2v2 .table-cards{transform:translateX(38px);}
+}
+@media (max-width:800px){
+  .mode-1v1 .deck-zone{left:34%;}
+  .mode-1v1 .table-cards{transform:translateX(38px);}
+  .mode-3p .deck-zone,
+  .mode-2v2 .deck-zone{left:36%;}
+  .mode-3p .table-cards,
+  .mode-2v2 .table-cards{transform:translateX(24px);}
+}
