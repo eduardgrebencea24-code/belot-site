@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { io } from 'socket.io-client';
 import './App.css';
 
-const SERVER_URL='http://localhost:3001';
+const SERVER_URL=import.meta.env.VITE_SERVER_URL || window.location.origin;
 const socket=io(SERVER_URL,{autoConnect:true});
 const SUITS=[
   {id:'clubs',symbol:'♣',name:'Трефы',red:false},

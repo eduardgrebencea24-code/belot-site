@@ -2,13 +2,14 @@ const express = require('express');
 const http = require('http');
 const cors = require('cors');
 const crypto = require('crypto');
+const path = require('path');
 const { Server } = require('socket.io');
 
 const app = express();
 app.use(cors());
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, { cors: { origin: '*', methods: ['GET', 'POST'] } });
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 const rooms = new Map();
 
 const SUITS = ['clubs', 'diamonds', 'hearts', 'spades'];
@@ -461,7 +462,19 @@ function finalizeRound(room){
 function nextRound(room){advanceDealer(room);room.game.roundNumber++;deal(room);}
 function removePlayer(room,pid){const i=room.players.findIndex(p=>p.id===pid);if(i<0)return;room.players.splice(i,1);if(!room.players.length){rooms.delete(room.code);return;}room.players.forEach((p,n)=>{p.seat=n;p.team=teamForSeat(room,n);});room.players[0].owner=true;}
 
-app.get('/',(_,res)=>res.json({ok:true,rooms:rooms.size}));
+const distPath = path.join(__dirname, 'dist');
+app.use(express.static(distPath));
+app.get('/',(_,res)=>{
+  const indexPath = path.join(distPath, 'index.html');
+  if (require('fs').existsSync(indexPath)) return res.sendFile(indexPath);
+  res.json({ok:true,rooms:rooms.size});
+});
+app.get(/.*/, (req,res,next)=>{
+  if (req.path.startsWith('/socket.io/')) return next();
+  const indexPath = path.join(distPath, 'index.html');
+  if (require('fs').existsSync(indexPath)) return res.sendFile(indexPath);
+  next();
+});
 
 io.on('connection',socket=>{
   socket.on('create-room',(data={},cb)=>{
@@ -513,4 +526,4 @@ io.on('connection',socket=>{
   socket.on('disconnect',()=>{const f=fromSocket(socket);if(!f)return;removePlayer(f.room,f.p.id);if(rooms.has(f.room.code))emitRoom(f.room);});
 });
 
-httpServer.listen(PORT,()=>console.log(`Belot server: http://localhost:${PORT}`));
+httpServer.listen(PORT,'0.0.0.0',()=>console.log(`Belot server listening on port ${PORT}`));
