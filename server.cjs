@@ -46,7 +46,7 @@ function strength(c,trump){ return (c.suit===trump?ORDER_TRUMP:ORDER_NORMAL).ind
 function teamForSeat(room,seat){ return config(room).teams ? (seat%2===0?1:2) : null; }
 
 function publicPlayer(room,p,viewerId){
-  return {id:p.id,name:p.name,seat:p.seat,owner:p.owner,connected:p.connected,team:p.team,cardCount:p.hand.length,
+  return {id:p.id,name:p.name,seat:p.seat,owner:p.owner,connected:p.connected,team:p.team,bolts:config(room).teams?(room.game?.teamBolts?.[p.team]||0):(p.bolts||0),cardCount:p.hand.length,
     cards:p.id===viewerId?p.hand:undefined,roundPoints:p.roundPoints,combinationPoints:p.combinationPoints,announcedPoints:p.announcedPoints||0,tricksWon:p.tricksWon||0,trumpPlayed:Boolean(p.trumpPlayed),matchScore:p.matchScore};
 }
 function publicGame(room,viewerId){
@@ -54,7 +54,7 @@ function publicGame(room,viewerId){
   return {phase:g.phase,roundNumber:g.roundNumber,dealerId:g.dealerId,turnPlayerId:g.turnPlayerId,
     trump:g.trump,trumpCard:g.trumpCard,offeredSuit:g.offeredSuit,trumpChooserId:g.trumpChooserId,autoTrump:Boolean(g.autoTrump),dealAnimation:g.dealAnimation||null,
     biddingRound:g.biddingRound,bidHistory:g.bidHistory,table:g.table,trickNumber:g.trickNumber,
-    trickLeaderId:g.trickLeaderId,lastTrickWinnerId:g.lastTrickWinnerId,lastTrickPoints:g.lastTrickPoints,
+    trickLeaderId:g.trickLeaderId,lastTrickWinnerId:g.lastTrickWinnerId,lastTrickPoints:g.lastTrickPoints,trickResolving:Boolean(g.trickResolving),teamBolts:g.teamBolts||{1:0,2:0},
     roundScores:g.roundScores,roundDisplayScores:g.roundDisplayScores||{},matchScores:g.matchScores,matchBiles:g.matchBiles||{},roundTeamScores:g.roundTeamScores,matchTeamScores:g.matchTeamScores,matchTeamBiles:g.matchTeamBiles||{1:0,2:0},announcements:g.announcements||[],
     combinations:g.combinations||[],myCards:me?me.hand:[],winnerId:g.winnerId||null,winnerTeam:g.winnerTeam||null,
     winningName:g.winningName||null,mode:room.mode};
@@ -338,19 +338,29 @@ function startRoomGame(room){
   room.game={phase:'bidding',roundNumber:1,dealerId:dealer,turnPlayerId:null,trump:null,trumpCard:null,offeredSuit:null,trumpChooserId:null,
     autoTrump:false,dealAnimation:null,
     biddingRound:1,bidHistory:[],announcements:[],deck:[],table:[],trickNumber:0,trickLeaderId:null,lastTrickWinnerId:null,lastTrickPoints:0,
-    roundScores:{},roundDisplayScores:{},roundTeamScores:{1:0,2:0},matchScores:{},matchBiles:{},matchTeamScores:{1:0,2:0},matchTeamBiles:{1:0,2:0},combinations:[],winnerId:null,winnerTeam:null,winningName:null};
+    roundScores:{},roundDisplayScores:{},roundTeamScores:{1:0,2:0},matchScores:{},matchBiles:{},matchTeamScores:{1:0,2:0},matchTeamBiles:{1:0,2:0},teamBolts:{1:0,2:0},trickResolving:false,combinations:[],winnerId:null,winnerTeam:null,winningName:null};
   deal(room);
 }
 function advanceDealer(room){const i=room.players.findIndex(p=>p.id===room.game.dealerId);room.game.dealerId=room.players[(i+1)%room.players.length].id;}
 function addRoundScore(room,pid,points){room.game.roundScores[pid]=(room.game.roundScores[pid]||0)+points;const p=player(room,pid);if(p)p.roundPoints+=points;if(config(room).teams)room.game.roundTeamScores[p.team]+=points;}
 function finishTrick(room){
-  const g=room.game,winnerId=trickWinner(room),pts=g.table.reduce((s,x)=>s+cardPoints(x.card,g.trump),0)+(room.players.every(p=>p.hand.length===0)?10:0);
+  const g=room.game;
+  if(g.trickResolving)return;
+  const winnerId=trickWinner(room),pts=g.table.reduce((sum,x)=>sum+cardPoints(x.card,g.trump),0)+(room.players.every(p=>p.hand.length===0)?10:0);
   addRoundScore(room,winnerId,pts);
   const winner=player(room,winnerId); if(winner)winner.tricksWon=(winner.tricksWon||0)+1;
-  g.lastTrickWinnerId=winnerId;g.lastTrickPoints=pts;
-  if(room.players.every(p=>p.hand.length===0)){finalizeRound(room);return;}
-  g.table=[];g.trickNumber++;g.trickLeaderId=winnerId;g.turnPlayerId=winnerId;
+  g.lastTrickWinnerId=winnerId;g.lastTrickPoints=pts;g.trickResolving=true;g.turnPlayerId=null;
+  const roundNumber=g.roundNumber;
+  emitRoom(room);
+  setTimeout(()=>{
+    if(!room.game||room.game.roundNumber!==roundNumber||!room.game.trickResolving)return;
+    const game=room.game;game.trickResolving=false;
+    if(room.players.every(p=>p.hand.length===0)){finalizeRound(room);emitRoom(room);return;}
+    game.table=[];game.trickNumber++;game.trickLeaderId=winnerId;game.turnPlayerId=winnerId;
+    emitRoom(room);
+  },2000);
 }
+
 function roundToBiles(points){
   // Каждые 10 очков дают 1 бель.
   // Округляем обычным математическим округлением:
@@ -404,6 +414,21 @@ function finalizeRound(room){
     g.roundDisplayScores['team-1']=0;
     g.roundDisplayScores['team-2']=0;
     for(const p of room.players)g.roundDisplayScores[`team-${p.team}`]+=roundDisplayScore(p);
+  }
+
+  // Болт сравнивается по фактическим очкам раздачи до перевода в били.
+  if(g.trumpChooserId){
+    const chooser=player(room,g.trumpChooserId);
+    if(config(room).teams && chooser){
+      const teamPoints={1:0,2:0};
+      for(const p of room.players)teamPoints[p.team]+=(g.roundScores[p.id]||0);
+      const otherTeam=chooser.team===1?2:1;
+      if(teamPoints[chooser.team]<teamPoints[otherTeam])g.teamBolts[chooser.team]=(g.teamBolts[chooser.team]||0)+1;
+    }else if(chooser){
+      const own=g.roundScores[chooser.id]||0;
+      const others=room.players.filter(p=>p.id!==chooser.id).map(p=>g.roundScores[p.id]||0);
+      if(others.some(score=>own<score))chooser.bolts=(chooser.bolts||0)+1;
+    }
   }
 
   // Если объявлений не было, общий счёт партии получает били, а не сырые очки.
@@ -477,18 +502,30 @@ app.get(/.*/, (req,res,next)=>{
 });
 
 io.on('connection',socket=>{
+  socket.on('resume-room',(data={},cb)=>{
+    const token=String(data.token||'');
+    let found=null;
+    for(const room of rooms.values()){
+      const p=room.players.find(x=>x.token===token);
+      if(p){found={room,p};break;}
+    }
+    if(!found)return err(socket,'Не удалось восстановить комнату. Возможно, сервер перезапускался или комната уже завершена.',cb);
+    found.p.socketId=socket.id;found.p.connected=true;socket.join(found.room.code);
+    if(typeof cb==='function')cb({success:true,room:publicRoom(found.room,found.p.id),playerId:found.p.id,token:found.p.token,roomCode:found.room.code});
+    emitRoom(found.room);
+  });
   socket.on('create-room',(data={},cb)=>{
     const mode=['1v1','3p','2v2'].includes(data.mode)?data.mode:'2v2', cfg=modeConfig(mode);
-    const p={id:id(),socketId:socket.id,name:normalizeName(data.name),owner:true,seat:0,team:teamForSeat({mode},0),connected:true,hand:[],roundPoints:0,combinationPoints:0,announcedPoints:0,tricksWon:0,trumpPlayed:false,matchScore:0};
+    const p={id:id(),socketId:socket.id,name:normalizeName(data.name),owner:true,seat:0,team:teamForSeat({mode},0),connected:true,hand:[],roundPoints:0,combinationPoints:0,announcedPoints:0,tricksWon:0,trumpPlayed:false,matchScore:0,bolts:0,token:crypto.randomBytes(24).toString('hex')};
     const room={code:roomCode(),name:String(data.roomName||'Новая игра').trim().slice(0,32)||'Новая игра',password:String(data.password||'').trim(),mode,started:false,players:[p],game:null,matchScores:{},matchTeamScores:{1:0,2:0}};
-    rooms.set(room.code,room);socket.join(room.code);if(typeof cb==='function')cb({success:true,room:publicRoom(room,p.id),playerId:p.id});emitRoom(room);
+    rooms.set(room.code,room);socket.join(room.code);if(typeof cb==='function')cb({success:true,room:publicRoom(room,p.id),playerId:p.id,token:p.token,roomCode:room.code});emitRoom(room);
   });
   socket.on('join-room',(data={},cb)=>{
     const room=rooms.get(String(data.code||'').trim());if(!room)return err(socket,'Комната не найдена.',cb);const cfg=modeConfig(room.mode);
     if(room.started)return err(socket,'Игра уже началась.',cb);if(room.players.length>=cfg.maxPlayers)return err(socket,`В комнате уже ${cfg.maxPlayers} игроков.`,cb);
     if(room.password&&String(data.password||'')!==room.password)return err(socket,'Неверный пароль комнаты.',cb);
-    const seat=room.players.length,p={id:id(),socketId:socket.id,name:normalizeName(data.name),owner:false,seat,team:teamForSeat(room,seat),connected:true,hand:[],roundPoints:0,combinationPoints:0,announcedPoints:0,tricksWon:0,trumpPlayed:false,matchScore:0};
-    room.players.push(p);socket.join(room.code);if(typeof cb==='function')cb({success:true,room:publicRoom(room,p.id),playerId:p.id});emitRoom(room);
+    const seat=room.players.length,p={id:id(),socketId:socket.id,name:normalizeName(data.name),owner:false,seat,team:teamForSeat(room,seat),connected:true,hand:[],roundPoints:0,combinationPoints:0,announcedPoints:0,tricksWon:0,trumpPlayed:false,matchScore:0,bolts:0,token:crypto.randomBytes(24).toString('hex')};
+    room.players.push(p);socket.join(room.code);if(typeof cb==='function')cb({success:true,room:publicRoom(room,p.id),playerId:p.id,token:p.token,roomCode:room.code});emitRoom(room);
   });
   socket.on('start-game',(data,cb)=>{
     const f=fromSocket(socket);if(!f)return err(socket,'Вы не в комнате.',cb);const cfg=config(f.room);
@@ -513,7 +550,7 @@ io.on('connection',socket=>{
     }
     if(data.action==='announce-combination'){const r=announceCombo(room,p,data.combinationId);if(typeof cb==='function')cb(r);if(r.success)emitRoom(room);return;}
     if(data.action==='play-card'){
-      if(g.phase!=='playing')return err(socket,'Сначала нужно завершить выбор козыря.',cb);if(g.turnPlayerId!==p.id)return err(socket,'Сейчас ход другого игрока.',cb);
+      if(g.phase!=='playing')return err(socket,'Сначала нужно завершить выбор козыря.',cb);if(g.trickResolving)return err(socket,'Подождите завершения показа взятки.',cb);if(g.turnPlayerId!==p.id)return err(socket,'Сейчас ход другого игрока.',cb);
       const idx=p.hand.findIndex(c=>c.id===data.cardId);if(idx<0)return err(socket,'Этой карты нет у вас.',cb);const legal=legalCards(room,p);if(!legal.some(c=>c.id===data.cardId))return err(socket,'Эту карту сейчас нельзя положить по правилам.',cb);
       const [card]=p.hand.splice(idx,1);
       if(card.suit===g.trump)p.trumpPlayed=true;
@@ -523,7 +560,7 @@ io.on('connection',socket=>{
     err(socket,'Неизвестное действие.',cb);
   });
   socket.on('leave-room',()=>{const f=fromSocket(socket);if(!f)return;removePlayer(f.room,f.p.id);socket.leave(f.room.code);if(rooms.has(f.room.code))emitRoom(f.room);});
-  socket.on('disconnect',()=>{const f=fromSocket(socket);if(!f)return;removePlayer(f.room,f.p.id);if(rooms.has(f.room.code))emitRoom(f.room);});
+  socket.on('disconnect',()=>{const f=fromSocket(socket);if(!f)return;f.p.connected=false;f.p.socketId=null;emitRoom(f.room);});
 });
 
 httpServer.listen(PORT,'0.0.0.0',()=>console.log(`Belot server listening on port ${PORT}`));

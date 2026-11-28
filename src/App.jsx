@@ -23,16 +23,29 @@ function App(){
   const [name,setName]=useState(''),[roomName,setRoomName]=useState(''),[password,setPassword]=useState(''),[mode,setMode]=useState('2v2');
   const [joinCode,setJoinCode]=useState(''),[joinPassword,setJoinPassword]=useState(''),[joinName,setJoinName]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);
   useEffect(()=>{
-    const state=r=>{setRoom(r);if(r.started)setScreen('game');};
+    const state=r=>{setRoom(r);if(r.started)setScreen('game');else setScreen('room');};
     const e=d=>setError(d?.message||'Ошибка');
-    socket.on('room-state',state);socket.on('error-message',e);
-    return()=>{socket.off('room-state',state);socket.off('error-message',e)};
+    const resume=()=>{
+      const saved=localStorage.getItem('belot-session');
+      if(!saved)return;
+      try{
+        const session=JSON.parse(saved);
+        if(!session?.token)return;
+        socket.emit('resume-room',{token:session.token},r=>{
+          if(r?.success){setRoom(r.room);setPlayerId(r.playerId);setScreen(r.room.started?'game':'room');}
+          else{localStorage.removeItem('belot-session');setError(r?.message||'Не удалось восстановить комнату.');}
+        });
+      }catch{localStorage.removeItem('belot-session');}
+    };
+    socket.on('room-state',state);socket.on('error-message',e);socket.on('connect',resume);
+    if(socket.connected)resume();
+    return()=>{socket.off('room-state',state);socket.off('error-message',e);socket.off('connect',resume)};
   },[]);
   const me=useMemo(()=>room?.players?.find(p=>p.id===playerId),[room,playerId]);
   const emit=(event,data,after)=>{setError('');setBusy(true);socket.emit(event,data,r=>{setBusy(false);if(!r?.success)setError(r?.message||'Ошибка');else after?.(r)})};
-  const create=()=>{if(!name.trim())return setError('Введите имя.');if(!roomName.trim())return setError('Введите название комнаты.');emit('create-room',{name,roomName,password,mode},r=>{setRoom(r.room);setPlayerId(r.playerId);setScreen('room')})};
-  const join=()=>{if(!joinName.trim())return setError('Введите имя.');if(!joinCode.trim())return setError('Введите код комнаты.');emit('join-room',{name:joinName,code:joinCode,password:joinPassword},r=>{setRoom(r.room);setPlayerId(r.playerId);setScreen('room')})};
-  const leave=()=>{socket.emit('leave-room');setRoom(null);setPlayerId(null);setScreen('home');setError('')};
+  const create=()=>{if(!name.trim())return setError('Введите имя.');if(!roomName.trim())return setError('Введите название комнаты.');emit('create-room',{name,roomName,password,mode},r=>{setRoom(r.room);setPlayerId(r.playerId);localStorage.setItem('belot-session',JSON.stringify({token:r.token,roomCode:r.roomCode}));setScreen('room')})};
+  const join=()=>{if(!joinName.trim())return setError('Введите имя.');if(!joinCode.trim())return setError('Введите код комнаты.');emit('join-room',{name:joinName,code:joinCode,password:joinPassword},r=>{setRoom(r.room);setPlayerId(r.playerId);localStorage.setItem('belot-session',JSON.stringify({token:r.token,roomCode:r.roomCode}));setScreen('room')})};
+  const leave=()=>{socket.emit('leave-room');localStorage.removeItem('belot-session');setRoom(null);setPlayerId(null);setScreen('home');setError('')};
   const start=()=>emit('start-game',{},r=>{setRoom(r.room);setScreen('game')});
   if(screen==='home')return <Home {...{name,setName,roomName,setRoomName,password,setPassword,mode,setMode,joinName,setJoinName,joinCode,setJoinCode,joinPassword,setJoinPassword,create,join,error,busy}}/>;
   if(screen==='room')return <Lobby room={room} me={me} start={start} leave={leave} busy={busy} error={error}/>;
@@ -113,7 +126,7 @@ function DealOverlay({g,chooserSide}){
   if(g?.dealAnimation?.stage!=='jack-flight'||!g.trumpCard)return null;
   return <div className={`jack-flight-overlay target-${chooserSide}`}><div className="jack-flight-card"><Card card={g.trumpCard} table/><div className="flight-glow"/></div><div className="bizone-badge">БИЗОН <b>{suit(g.trumpCard.suit).symbol}</b></div></div>;
 }
-function PlayerPos({p,side,active,g,ghost}){if(!p||ghost)return null;const liveRound=Number(p.roundPoints||0)+Number(p.combinationPoints||0);const score=(g?.phase==='playing'||g?.phase==='bidding')?liveRound:(p.matchScore||0);return <div className={`player-pos ${side} ${active?'active':''}`}><div className="avatar large">{p.name.slice(0,1).toUpperCase()}</div><div className="player-name"><b>{p.name}</b><span className="live-score">Очки: <strong>{score}</strong></span>{(p.announcedPoints||0)>0&&<span className="live-announcement"><span>Объявлено</span> <strong>+{p.announcedPoints}</strong></span>}</div><div className="tricks-badge"><span>Взятки</span><strong>{p.tricksWon||0}</strong></div><div className="back-cards">{Array.from({length:Math.min(p.cardCount,5)}).map((_,i)=><span key={i}/>)}</div>{p.team&&<small className="team-tag">Команда {p.team}</small>}</div>}
+function PlayerPos({p,side,active,g,ghost}){if(!p||ghost)return null;const liveRound=Number(p.roundPoints||0)+Number(p.combinationPoints||0);const score=(g?.phase==='playing'||g?.phase==='bidding')?liveRound:(p.matchScore||0);return <div className={`player-pos ${side} ${active?'active':''}`}><div className="avatar large">{p.name.slice(0,1).toUpperCase()}</div><div className="player-name"><b>{p.name}{(p.bolts||0)>0&&<span className="bolt-count"> · Болты: {p.bolts}</span>}</b><span className="live-score">Очки: <strong>{score}</strong></span>{(p.announcedPoints||0)>0&&<span className="live-announcement"><span>Объявлено</span> <strong>+{p.announcedPoints}</strong></span>}</div><div className="tricks-badge"><span>Взятки</span><strong>{p.tricksWon||0}</strong></div><div className="back-cards">{Array.from({length:Math.min(p.cardCount,5)}).map((_,i)=><span key={i}/>)}</div>{p.team&&<small className="team-tag">Команда {p.team}</small>}</div>}
 function Card({card,table}){const s=suit(card.suit);return <div className={`card ${s.red?'red':''} ${table?'table-card':''}`}><div className="rank">{card.rank}</div><div className="big-suit">{s.symbol}</div>{['J','Q','K'].includes(card.rank)&&<div className="court">{card.rank==='J'?'♙':card.rank==='Q'?'♕':'♔'}</div>}</div>}
 function Bidding({g,playerId}){const my=g.turnPlayerId===playerId,r=g.biddingRound,off=suit(g.offeredSuit);const unavailable=r===1?SUITS.filter(s=>s.id!==g.offeredSuit):SUITS.filter(s=>s.id===g.offeredSuit);return <div className="bid-box"><div><span className="eyebrow">КОЗЫРЬ</span><h2>{r===1?'Первый круг':r===2?'Второй круг':'Третий круг'}</h2><p>{r===1?<>Предложена масть <b>{off.symbol} {off.name}</b>. Можно взять её или сказать «Пас».</>:<>В первом круге от <b>{off.symbol} {off.name}</b> отказались. Теперь её выбрать нельзя.</>}</p></div><div className="bid-buttons">{SUITS.map(s=><button key={s.id} disabled={!my||(r===1&&s.id!==g.offeredSuit)||((r===2||r===3)&&s.id===g.offeredSuit)} onClick={()=>act('choose-trump',{choice:s.id})} className={`${s.red?'red':''} ${unavailable.some(x=>x.id===s.id)?'forbidden':''}`}><b>{s.symbol}</b><span>{s.name}</span></button>)}{r!==3&&<button className="pass" disabled={!my} onClick={()=>act('choose-trump',{choice:'pass'})}>Пас</button>}</div><div className="bid-state">{my?'ВАШ ХОД — выберите масть или «Пас»':'Ожидание решения игрока'}</div></div>}
 function PlayPanel({g,playerId,myTurn,turn}){const mine=g.combinations?.find(x=>x.playerId===playerId),combo=mine?.items?.find(x=>!x.announced&&x.points>0),canAnnounce=(g.trickNumber||0)<=2;return <div className="play-controls"><div className="turn-text">{myTurn?'Ваш ход':`Ход: ${turn?.name||'—'}`}</div><div className="combo-row">{g.autoTrump&&<span className="auto-trump">Валет был открыт — козырь выбран автоматически</span>}{canAnnounce&&combo&&<button className="small-btn" onClick={()=>act('announce-combination',{combinationId:combo.id})}>Объявить {combo.label}</button>}<span>Козырь: {g.trump?suit(g.trump).symbol:'—'}</span></div></div>}
